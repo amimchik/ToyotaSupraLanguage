@@ -2,7 +2,8 @@
 #include <list>
 #include <map>
 #include <cctype>
-#include <exception>
+#include <stdexcept>
+#include <cstdint>
 
 #pragma once
 
@@ -108,7 +109,7 @@ namespace ToyotaSupraLanguage {
 			{ "while", Token::createSimple(TokenType::While) },
 			{ "function", Token::createSimple(TokenType::Function) }
 		};
-		int strIndexOf(const std::string& const str, char c);
+		int strIndexOf(const std::string& str, char c);
 		bool inRange(size_t i);
 		char next();
 		char peek(int offset);

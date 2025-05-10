@@ -1,4 +1,4 @@
-#include "Lexer.h"
+#include <ToyotaSupraLanguage/Lexer.h>
 
 namespace ToyotaSupraLanguage {
 
@@ -78,7 +78,7 @@ namespace ToyotaSupraLanguage {
         }
 
         if (buffer.length() == 0) {
-            throw std::exception("operator error");
+            throw std::runtime_error("operator error");
         }
 
         return specs.at(buffer);
@@ -140,7 +140,7 @@ namespace ToyotaSupraLanguage {
         }
         return '\0';
     }
-    int Lexer::strIndexOf(const std::string& const str, char c) {
+    int Lexer::strIndexOf(const std::string& str, char c) {
         for (int i = 0; i < str.length(); i++) {
             if (str[i] == c) {
                 return i;
@@ -176,62 +176,56 @@ namespace ToyotaSupraLanguage {
     }
     std::string Token::toString() const {
         if (type == TokenType::Identifier) {
-            return "id:" + stringValue;
+            return "[ID:" + stringValue + "]";
         }
-        return tokenTypeToString(type);
+        return "[" + tokenTypeToString(type) + "]";
     }
+    std::string tokenTypeToString(TokenType type) {
+        switch (type) {
+        case TokenType::Let: return "Let";
+        case TokenType::Identifier: return "Identifier";
+        case TokenType::NumberLiteral: return "NumberLiteral";
+        case TokenType::StringLiteral: return "StringLiteral";
 
-    std::string tokenTypeToString(TokenType t) {
-        switch (t) {
-        case TokenType::Let:
-            return "let";
-            break;
-        case TokenType::NumberLiteral:
-            return "numberLiteral";
-        case TokenType::StringLiteral:
-            return "stringLiteral";
-        case TokenType::Print:
-            return "print";
-        case TokenType::PrintL:
-            return "printl";
-        case TokenType::ReadL:
-            return "readl";
-        case TokenType::ReadC:
-            return "readc";
-        case TokenType::If:
-            return "if";
-        case TokenType::Else:
-            return "else";
-        case TokenType::While:
-            return "while";
-        case TokenType::Function:
-            return "function";
-        case TokenType::Plus:
-            return "+";
-        case TokenType::Minus:
-            return "-";
-        case TokenType::Star:
-            return "*";
-        case TokenType::Slash:
-            return "/";
-        case TokenType::Assign:
-            return "=";
-        case TokenType::Identifier:
-            return "id";
-        case TokenType::EndOfFile:
-            return "EOF";
-        case TokenType::Colon:
-            return ":";
-        case TokenType::Dot:
-            return ".";
-        case TokenType::Comma:
-            return ",";
-        case TokenType::LParen:
-            return "(";
-        case TokenType::RParen:
-            return ")";
-        default:
-            return "unknown";
+        case TokenType::Print: return "Print";
+        case TokenType::PrintL: return "PrintL";
+        case TokenType::ReadL: return "ReadL";
+        case TokenType::ReadC: return "ReadC";
+
+        case TokenType::If: return "If";
+        case TokenType::Else: return "Else";
+        case TokenType::While: return "While";
+
+        case TokenType::Function: return "Function";
+
+        case TokenType::Plus: return "Plus";
+        case TokenType::Minus: return "Minus";
+        case TokenType::Star: return "Star";
+        case TokenType::Slash: return "Slash";
+
+        case TokenType::Assign: return "Assign";
+
+        case TokenType::Equals: return "Equals";
+        case TokenType::NotEquals: return "NotEquals";
+        case TokenType::LessThan: return "LessThan";
+        case TokenType::GreatherThan: return "GreatherThan";
+        case TokenType::LessEqualThan: return "LessEqualThan";
+        case TokenType::GreatherEqualThen: return "GreatherEqualThen";
+
+        case TokenType::Colon: return "Colon";
+        case TokenType::Comma: return "Comma";
+        case TokenType::Dot: return "Dot";
+
+        case TokenType::LBracket: return "LBracket";
+        case TokenType::RBracket: return "RBracket";
+        case TokenType::LBrace: return "LBrace";
+        case TokenType::RBrace: return "RBrace";
+        case TokenType::LParen: return "LParen";
+        case TokenType::RParen: return "RParen";
+
+        case TokenType::EndOfFile: return "EOF";
         }
+
+        throw std::invalid_argument("Unknown TokenType");
     }
 }  // namespace ToyotaSupraLanguage

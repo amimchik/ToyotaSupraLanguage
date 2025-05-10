@@ -1,7 +1,7 @@
 #include <iostream>
 #include <list>
 
-#include "Lexer.h"
+#include <ToyotaSupraLanguage/Lexer.h>
 
 using namespace ToyotaSupraLanguage;
 

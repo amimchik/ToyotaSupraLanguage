@@ -2,8 +2,10 @@
 
 #include <list>
 #include <memory>
+#include <map>
+#include <string>
 
-#include "Lexer.h"
+#include <ToyotaSupraLanguage/Lexer.h>
 
 namespace ToyotaSupraLanguage {
 
@@ -36,15 +38,24 @@ namespace ToyotaSupraLanguage {
     class ASTNode {
     private:
         NodeType type;
-        // Binary ops
-        ASTNode* left;
-        ASTNode* right;
-        // 
-        std::list<ASTNode> nodes;
+        // Binary ops / assign
+        std::unique_ptr<ASTNode> left;
+        std::unique_ptr<ASTNode> right;
+        // IfElse / While
+        std::unique_ptr<ASTNode> condition;
+        std::unique_ptr<ASTNode> thenN;
+        std::unique_ptr<ASTNode> elseN;
+        // ArrayLiteral
+        std::list<std::unique_ptr<ASTNode>> arrContent;
+        // ObjectLiteral
+        std::list<std::pair<std::string, std::unique_ptr<ASTNode>>> objectContent;
+        // memberAccess
+        std::string memberName;
+        std::unique_ptr<ASTNode> parent;
     public:
         NodeType getType();
         void setType(NodeType type);
-        std::list<ASTNode> getChildren();
+        std::list<std::unique_ptr<ASTNode>> getChildren();
     };
 
     class Parser {
